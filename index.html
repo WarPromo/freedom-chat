@@ -349,7 +349,7 @@
 
   <script>
 
-    const socket = io('https://73.158.155.72:3000', { rejectUnauthorized: false } );
+    const socket = io('https://73.158.155.72:3000', {secure: true} );
 
 
     let states = ["Start", "Stop", "Leave Room"];
