@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="https://www.pngmart.com/files/6/Bald-Eagle-PNG-Free-Download.png">
+    <meta charset="utf-8" />
+    <title>The Freedom Chat</title>
+    	<script src="socket.io.js"></script>
+  </head>
+  <body id = "body" onunload="pageunload()">
+
+  <table cellspacing="20" id = "tablecontainer">
+
+    <tr>
+      <td id = "categories">
+        <div id = "categoryholder">
+          <h1 id="categoriestitle"style="font-family:tahoma; font-weight:100">CATEGORIES</h1>
+
+          <div id = "categorybuttons">
+          </div>
+        </div>
+
+      </td>
+      <th id="messages">
+
+        <div id = "messagestext">
+          <p class="messagestexts"><br></br><b>WELCOME!</b> No Censorship. Click "Start" to chat with someone</p>
+          <p id = "messageinsert"><br></br></p>
+
+        </div>
+
+
+
+
+      </th>
+    </tr>
+    <tr>
+      <td>
+
+
+        <label class="switch">
+          <input id="checkbox" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+
+        <script>
+
+
+          var clickEvent = new MouseEvent("click", {
+              "view": window,
+              "bubbles": true,
+              "cancelable": false
+          });
+
+          let theswitch = document.getElementById('checkbox');
+
+
+
+
+
+          changestate();
+
+          theswitch.onclick = changestate
+
+          function changestate(){
+            if(theswitch.checked){
+              document.getElementById("body").style.filter = "invert(100%)";
+              document.getElementById("body").style.backgroundColor = "#191919";
+            }
+            else{
+              document.getElementById("body").style.filter = "invert(0%)";
+              document.getElementById("body").style.backgroundColor = "white";
+            }
+          }
+        </script>
+
+
+
+      </td>
+
+      <td>
+
+        <table width = "100%" id = "inputs">
+
+          <tr>
+            <td id = "nextperson">
+
+              <button id = "changename" onclick = "userinputbox()">Change Name</button>
+              <button id = "nextpersonbutton" onclick = "nextpersonbuttonclick()">join queue</button>
+
+            </td>
+            <td id = "messagebox">
+              <input id = "usernameinput"placeholder="Must be 1-32 characters" maxlength=32></input>
+              <input id = "messageboxinput" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
+
+            </td>
+          </tr>
+
+
+        </table>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+</body>
+
+
+  <style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      transform: translate(-50%);
+      left: 50%;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .0s;
+      transition: .0s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .0s;
+      transition: .0s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+
+
+
+  <style>
+    body{
+      position: relative;
+      overflow: hidden;;
+      filter: invert(100%);
+      background-color:#191919;
+    }
+    #liberty{
+      position: absolute;
+      bottom: -50px;
+      left: -30px;
+      z-index: -1;
+      transform: scale(0.9, 0.9);
+
+
+    }
+
+    #eagle{
+      position: absolute;
+      bottom: -700px;
+      right: -500px;
+      z-index: -1;
+      transform: scale(-0.3, 0.3);
+
+
+    }
+
+    #usernameinput{
+      width: 24%;
+    }
+
+    #tablecontainer{
+      position: absolute;
+      width: 67%;
+      left: 50%;
+      top: 30px;
+      transform: translate(-50%, 0);
+
+    }
+
+    #categories{
+
+      width: 300px;
+      background-color: #dddddd;
+
+
+    }
+
+    #categoriestitle{
+      position: absolute;
+      top:20px;
+      left:44px;
+    }
+
+    #categorybuttons{
+      position: absolute;
+      width: 0px;
+      top: 100px;
+      left:40px;
+    }
+
+    .categorybutton{
+      width: 150px;
+      margin: 5px;
+      font-size: 18px;
+    }
+
+
+    #messages{
+      position: relative;
+      height: 30vw;
+      width: 75%;
+      background-color: #dddddd;
+    }
+
+    #messagebox{
+      height: 70px;
+      width: 100%;
+    }
+
+    #inputs{
+      background-color: #dddddd;
+    }
+
+    #nextperson{
+      height: 70px;
+      width: 10%;
+    }
+
+    #messageboxinput{
+      width: 95%;
+      height: 50%;
+      position: relative;
+      bottom: -3px;
+      font-size: 15px;
+    }
+
+    #nextpersonbutton{
+      height: 50%;
+      width: 100%;
+      text-overflow: hidden;
+    }
+
+    #inputs{
+      border-collapse: collapse;
+    }
+
+    #messagestext{
+
+      position: absolute;
+      top: 0%;
+      left: 5%;
+      text-align:left;
+      height: 100%;
+      width: 95%;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+
+    }
+
+    .messagestexts{
+      font-weight:normal;
+      width: 80%;
+      text-overflow: inherit;
+      font-family: Garamond;
+      font-size: 23px;
+      margin: 0px;
+    }
+
+
+  </style>
+
+  <script>
+
+    document.getElementById("usernameinput").value = "bobby";
+
+
+    function addmessage(message){
+
+      let messagebox = document.getElementById("messagestext");
+
+      let newmessage = document.createElement("p");
+
+      newmessage.innerHTML = message;
+      newmessage.classList.add("messagestexts");
+
+
+      let scroll = messagebox.scrollTop == messagebox.scrollHeight - messagebox.clientHeight;
+
+      messagebox.insertBefore(newmessage, document.getElementById("messageinsert"));
+
+      if(scroll) messagebox.scrollTop = messagebox.scrollHeight - messagebox.clientHeight
+
+    }
+
+    function userinputbox() {
+
+      let inputbox = document.getElementById("usernameinput")
+
+      let name = inputbox.value;
+
+      if(name.trim() == "") return;
+
+      console.log(inputbox.value);
+
+      socket.emit("setusername", name);
+
+    }
+
+
+
+
+
+  </script>
+
+  <script>
+
+    const socket = io('https://73.158.155.72:3000');
+
+
+    let states = ["Start", "Stop", "Leave Room"];
+    let state = states[0];
+
+    let categories = [];
+    let currentcategory;
+
+    console.log("CONNECTING");
+
+    socket.on("connect", () => {
+
+      console.log("connected");
+      socket.emit("getcategories");
+
+    })
+
+    socket.on("chatmessage", (user, message) =>{
+      addmessage(`
+        <b style="color:red">
+        ${user}</b>:
+        ${message}
+      `);
+    });
+
+    socket.on("personfound", (user) => {
+
+      addmessage(`
+        Say hi to
+        <b style="color:red">
+        ${user}</b>!
+      `);
+
+      let thebutton = document.getElementById("nextpersonbutton");
+      state = states[2];
+      thebutton.innerText = state;
+
+    });
+
+    socket.on("roomleft", (user) => {
+
+      addmessage(`
+        <b style="color:red">
+        ${user}</b> has left...
+      `);
+
+      let thebutton = document.getElementById("nextpersonbutton");
+      state = states[0];
+      thebutton.innerText = state;
+
+    })
+
+    socket.on("queueleft", (user) => {
+
+      addmessage(`
+        queue left...
+      `);
+
+      let thebutton = document.getElementById("nextpersonbutton");
+      state = states[0];
+      thebutton.innerText = state;
+
+    })
+
+    socket.on("namechanged", username => {
+
+      addmessage(`
+        name changed to
+        <b style="color:blue">
+        ${username}</b>...
+      `);
+
+    })
+
+    socket.on("categories", categoryList => {
+
+      for(var a = 0; a < categoryList.length; a++){
+
+        let newbutton = document.createElement("button");
+        let section = document.getElementById("categorybuttons")
+        let text = document.createElement("p");
+
+        text.innerHTML = categoryList[a];
+
+        if(a == 0){
+
+          text.innerHTML = `<b style="color:red">` + text.innerHTML + "</b>";
+          currentcategory = categoryList[a];
+
+        }
+
+        newbutton.append(text);
+
+        newbutton.onclick = function(){
+
+          let style = `<b style="color:red">CATEGORY</b>`;
+
+          for(var i = 0; i < categories.length; i++){
+            console.log(categories[i]);
+            categories[i].firstChild.innerHTML = categoryList[i];
+          }
+
+
+          currentcategory = newbutton.firstChild.innerHTML;
+          newbutton.firstChild.innerHTML = style.replace("CATEGORY", newbutton.firstChild.innerHTML);
+
+
+
+
+        }
+
+        newbutton.classList.add("categorybutton");
+
+
+
+        section.append(newbutton);
+
+
+        categories.push(newbutton);
+
+
+      }
+
+
+    })
+
+    document.getElementById("nextpersonbutton").innerText = state;
+
+    window.addEventListener('beforeunload', function (e) {
+      /*
+      if(states.indexOf(state) > 0){
+        e.preventDefault();
+      }
+      */
+
+      for(var a = 0; a < 1000; a++){
+        if(a == 0){
+          if(states.indexOf(state) > 0){
+            nextpersonbuttonclick();
+          }
+        }
+        console.log("UNLOAD SEQUENCE");
+      }
+
+    });
+
+    function nextpersonbuttonclick(){
+
+
+      let thebutton = document.getElementById("nextpersonbutton");
+
+
+      console.log(thebutton);
+
+
+      if(state == states[0]){
+
+        console.log("SENT JOINQUEUE")
+
+        socket.emit("joinqueue", currentcategory);
+
+        addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
+
+        state = states[1]
+        thebutton.innerText = state;
+
+      }
+
+      else if(state == states[1]){
+
+        socket.emit("leavequeue")
+
+      }
+
+      else if(state == states[2]){
+
+
+        socket.emit("leaveroom");
+        thebutton.innerText = state;
+
+
+      }
+
+    }
+
+
+    function leaveroom(){
+
+    }
+
+    function leavequeue(){
+
+    }
+
+    function joinqueue(){
+
+    }
+
+    function inputbox(event) {
+
+      if (event.keyCode == 13) {
+
+        let inputbox = document.getElementById("messageboxinput")
+
+        let message = inputbox.value;
+
+        if(state != states[2]) return;
+
+        if(message.trim() == "") return;
+
+        console.log(inputbox.value);
+
+        inputbox.value = "";
+
+        socket.emit("sendmessage", message);
+
+
+      }
+
+    }
+
+
+
+  </script>
+
+</html>
