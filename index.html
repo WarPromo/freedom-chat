@@ -3,16 +3,15 @@
   <head>
     <link rel="icon" href="https://www.pngmart.com/files/6/Bald-Eagle-PNG-Free-Download.png">
     <meta charset="utf-8" />
-    <meta content="TheFreedomChat - Absolutely no rules, text with strangers" property="og:title">
-    <meta content="Lots of interesting conversations are to be made when there are no restrictions. Discuss whatever, with no consequences whatsoever." property="og:description">
-    <meta content="www.thefreedomchat.com" property="og:site_name">
-    <meta content='https://discord-rich-embed-test.warpromo.repl.co/freedomchaticon.png' property='og:image'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The Freedom Chat</title>
     	<script src="socket.io.js"></script>
   </head>
   <body id = "body" onunload="pageunload()">
 
-  <table cellspacing="20" id = "tablecontainer">
+  <div id = "entirechatbox">
+
+  <table cellspacing="5" id = "left">
 
     <tr>
       <td id = "categories">
@@ -24,22 +23,9 @@
         </div>
 
       </td>
-      <th id="messages">
-
-        <div id = "messagestext">
-          <p class="messagestexts"><br></br><b>WELCOME!</b> No Censorship. Click "Start" to chat with someone</p>
-          <p id = "messageinsert"><br></br></p>
-
-        </div>
-
-
-
-
-      </th>
     </tr>
     <tr>
-      <td>
-
+      <td id = "switchcontainer">
 
         <label class="switch">
           <input id="checkbox" type="checkbox">
@@ -57,10 +43,6 @@
 
           let theswitch = document.getElementById('checkbox');
 
-
-
-
-
           changestate();
 
           theswitch.onclick = changestate
@@ -76,26 +58,44 @@
             }
           }
         </script>
-
-
-
       </td>
+    </tr>
+  </table>
+
+  <table cellspacing="5" id = "right">
+
+    <tr>
+      <th id="messages">
+
+        <div id = "messagestext">
+          <p class="messagestexts"><br></br><b>WELCOME!</b> No Censorship. Click "Start" to chat with someone</p>
+          <p id = "messageinsert"><br></br></p>
+
+        </div>
+
+
+
+
+      </th>
+    </tr>
+    <tr>
 
       <td>
 
         <table width = "100%" id = "inputs">
 
           <tr>
-            <td id = "nextperson">
-
-              <button id = "changename" onclick = "userinputbox()">Change Name</button>
-              <button id = "nextpersonbutton" onclick = "nextpersonbuttonclick()">join queue</button>
-
-            </td>
-            <td id = "messagebox">
+            <td class = "inputrow">
+              <button id = "changename" class = "regularbutton" onclick = "userinputbox()">Set Name</button>
               <input id = "usernameinput"placeholder="Must be 1-32 characters" maxlength=32></input>
-              <input id = "messageboxinput" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
+            </td>
 
+          </tr>
+
+          <tr>
+            <td class = "inputrow">
+              <button id = "nextpersonbutton" class = "regularbutton" onclick = "nextpersonbuttonclick()">join queue</button>
+              <input id = "messageboxinput" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
             </td>
           </tr>
 
@@ -107,6 +107,26 @@
     </tr>
 
   </table>
+</div>
+
+<style>
+
+  #entirechatbox{
+
+    position: relative;
+    display: inline-flex;
+    left: 50%;
+    transform: translate(-50%);
+    top: 50px;
+
+  }
+  .regularbutton{
+    border-radius: 0px;
+    border: 1px solid black;
+  }
+
+
+</style>
 
 </body>
 
@@ -178,7 +198,8 @@
   <style>
     body{
       position: relative;
-      overflow: hidden;;
+      overflow-x: hidden;
+      overflow-y: scroll;
       filter: invert(100%);
       background-color:#191919;
     }
@@ -202,22 +223,27 @@
 
     }
 
-    #usernameinput{
-      width: 24%;
+
+    #left{
+      position: relative;
+      bottom: 50%;
+      display: inline-block;
+
     }
 
-    #tablecontainer{
-      position: absolute;
-      width: 67%;
-      left: 50%;
-      top: 30px;
-      transform: translate(-50%, 0);
+    #switchcontainer{
+      height: 70px;
+    }
 
+    #right{
+      position: relative;
+      display: inline-block;
     }
 
     #categories{
 
       width: 300px;
+      height: 585px;
       background-color: #dddddd;
 
 
@@ -245,8 +271,9 @@
 
     #messages{
       position: relative;
-      height: 30vw;
-      width: 75%;
+      height: 580px;
+      max-height: 50vw;
+      width: 930px;
       background-color: #dddddd;
     }
 
@@ -255,31 +282,81 @@
       width: 100%;
     }
 
-    #inputs{
-      background-color: #dddddd;
-    }
 
     #nextperson{
       height: 70px;
+      min-height: 100%;
       width: 10%;
+      position: relative;
     }
 
-    #messageboxinput{
-      width: 95%;
-      height: 50%;
+    #changename{
+      height: 34px;
+      text-overflow: hidden;
+      display: inline-block;
+      margin: 0;
       position: relative;
-      bottom: -3px;
+      left: 1.4%;
+
+    }
+
+    #usernameinput{
+      width: 30%;
+      height: 34px;
       font-size: 15px;
+      display: inline-block;
+      margin: -5px;
+      border-radius: 0px;
+      border: solid 1px black;
+      bottom: -1px;
+      box-sizing: border-box;
+      padding: 4px;
+      position: relative;
+      left: 1.4%;
+
     }
 
     #nextpersonbutton{
-      height: 50%;
-      width: 100%;
+      height: 34px;
+      width: 10%;
       text-overflow: hidden;
+      display: inline-block;
+      margin: 0;
+      padding: 0px;
+      box-sizing: border-box;
+      position: relative;
+      left: 1.4%;
     }
+    #messageboxinput{
+      width: 85%;
+      height: 34px;
+      position: relative;
+      font-size: 15px;
+      display: inline-block;
+      margin: -5px;
+      border-radius: 0px;
+      border: solid 1px black;
+      padding: 4px;
+      bottom: -1px;
+      box-sizing: border-box;
+      position: relative;
+      left: 1.4%;
+    }
+    input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 
     #inputs{
       border-collapse: collapse;
+      background-color: #dddddd;
+    }
+
+    .inputrow{
+      height: 45px;
     }
 
     #messagestext{
