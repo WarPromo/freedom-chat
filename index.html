@@ -439,6 +439,7 @@ button:focus {
 
     let states = ["Start", "Stop", "Leave Room"];
     let state = states[0];
+    let quack = new Audio("Quack Sound Effect (128 kbps).mp3");
 
     let categories = [];
     let currentcategory;
@@ -471,6 +472,7 @@ button:focus {
       let thebutton = document.getElementById("nextpersonbutton");
       state = states[2];
       thebutton.innerText = state;
+      quack.play();
 
     });
 
