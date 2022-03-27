@@ -91,7 +91,7 @@
           <tr>
             <td class = "inputrow">
               <button id = "changename" class = "regularbutton" onclick = "userinputbox()">Set Name</button>
-              <input id = "usernameinput"placeholder="Must be 1-32 characters" maxlength=32></input>
+              <input id = "usernameinput"placeholder="Must be 1-32 characters" maxlength=32 oninput="userinputtyping()"></input>
             </td>
 
           </tr>
@@ -416,6 +416,8 @@ button:focus {
 
     }
 
+    let currentname = "bobby";
+
     function userinputbox() {
 
       let inputbox = document.getElementById("usernameinput")
@@ -427,6 +429,40 @@ button:focus {
       console.log(inputbox.value);
 
       socket.emit("setusername", name);
+      currentname = name;
+      userinputtyping();
+
+    }
+
+    function userinputtyping(){
+
+      let inputbox = document.getElementById("usernameinput")
+
+      let name = inputbox.value;
+      let box = document.getElementById("changename")
+
+      if(name.trim() == ""){
+        box.disabled = true;
+        return;
+      }
+      else{
+        box.disabled = false;
+      }
+
+
+
+      if(name != currentname){
+
+        console.log("not equal")
+        box.style.fontWeight = "bold";
+
+
+      }
+      else{
+        console.log("equal")
+        box.style.fontWeight = null;
+      }
+
 
     }
 
@@ -675,7 +711,7 @@ button:focus {
         clearTimeout(stoptyping);
       }
 
-      stoptyping = setTimeout(stoptypingping, 200);
+      stoptyping = setTimeout(stoptypingping, 600);
 
       istyping = true;
 
