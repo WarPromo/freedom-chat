@@ -74,7 +74,7 @@
 
         <div id = "messagestext">
           <p class="messagestexts"><br></br><b>WELCOME!</b> Absolutely no rules, say and do anything you want. Click "Start" to chat with someone</p>
-          <p id = "messageinsert"><br></br></p>
+          <p id = "messageinsert" class = "messagestexts"><br></br></p>
 
         </div>
 
@@ -100,7 +100,7 @@
           <tr>
             <td class = "inputrow">
               <button id = "nextpersonbutton" class = "regularbutton" onclick = "nextpersonbuttonclick()">join queue</button>
-              <input id = "messageboxinput" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
+              <input id = "messageboxinput" oninput="typing()" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
             </td>
           </tr>
 
@@ -233,6 +233,10 @@
       bottom: 50%;
       display: inline-block;
 
+    }
+
+    #messageinsert{
+      color: gray;
     }
 
     #switchcontainer{
@@ -512,6 +516,20 @@ button:focus {
 
     })
 
+    socket.on("starttyping", username => {
+
+      let messageinsert = document.getElementById("messageinsert");
+
+      messageinsert.innerHTML = `${username} is typing<br><br>`;
+
+    });
+
+    socket.on("stoptyping", username => {
+
+      messageinsert.innerHTML = `<br><br>`;
+
+    })
+
     socket.on("categories", categoryList => {
 
       for(var a = 0; a < categoryList.length; a++){
@@ -636,6 +654,42 @@ button:focus {
 
     }
 
+
+    let stoptyping;
+    let istyping = false
+
+    function typing(){
+
+      console.log("Started typing");
+
+      if(istyping == false){
+        console.log("Send start typing");
+
+        socket.emit("starttyping");
+      }
+
+      if(stoptyping != undefined){
+        clearTimeout(stoptyping);
+      }
+
+      stoptyping = setTimeout(stoptypingping, 200);
+
+      istyping = true;
+
+
+    }
+
+    function stoptypingping(){
+
+      if(istyping == true){
+
+        console.log("Send stop typing");
+
+        socket.emit("stoptyping");
+      }
+      istyping = false;
+    }
+
     function inputbox(event) {
 
       if (event.keyCode == 13) {
@@ -664,3 +718,4 @@ button:focus {
   </script>
 
 </html>
+
