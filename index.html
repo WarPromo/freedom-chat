@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <link rel="icon" href="https://www.pngmart.com/files/6/Bald-Eagle-PNG-Free-Download.png">
@@ -444,7 +443,9 @@ button:focus {
 
     let states = ["Start", "Stop", "Leave Room"];
     let state = states[0];
+
     let quack = new Audio("Quack Sound Effect (128 kbps).mp3");
+    let click = new Audio("Hard Click.wav");
 
     let categories = [];
     let currentcategory;
@@ -491,6 +492,8 @@ button:focus {
       let thebutton = document.getElementById("nextpersonbutton");
       state = states[0];
       thebutton.innerText = state;
+
+      click.play();
 
     })
 
@@ -672,7 +675,7 @@ button:focus {
         clearTimeout(stoptyping);
       }
 
-      stoptyping = setTimeout(stoptypingping, 600);
+      stoptyping = setTimeout(stoptypingping, 200);
 
       istyping = true;
 
@@ -718,4 +721,3 @@ button:focus {
   </script>
 
 </html>
-
