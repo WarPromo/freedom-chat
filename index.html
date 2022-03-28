@@ -386,7 +386,7 @@ button:focus {
 
     .messagestexts{
       font-weight:normal;
-      width: 80%;
+      width: 90%;
       text-overflow: inherit;
       font-family: Garamond;
       font-size: 23px;
@@ -539,12 +539,28 @@ button:focus {
     socket.on("queueleft", (user) => {
 
       addmessage(`
-        queue left...
+        Queue left...
       `);
 
       let thebutton = document.getElementById("nextpersonbutton");
       state = states[0];
       thebutton.innerText = state;
+
+    })
+
+    socket.on("queuejoined", (user) => {
+
+      addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
+
+      let thebutton = document.getElementById("nextpersonbutton");
+      state = states[1]
+      thebutton.innerText = state;
+
+    })
+
+    socket.on("log", (message) => {
+
+      addmessage(message);
 
     })
 
@@ -574,10 +590,18 @@ button:focus {
 
     socket.on("categories", categoryList => {
 
+
+      console.log("RECIEVED: " + categoryList);
+
+      let section = document.getElementById("categorybuttons")
+
+      section.innerHTML = "";
+
+      categories = [];
+
       for(var a = 0; a < categoryList.length; a++){
 
         let newbutton = document.createElement("button");
-        let section = document.getElementById("categorybuttons")
         let text = document.createElement("p");
 
         text.innerHTML = categoryList[a];
@@ -596,7 +620,6 @@ button:focus {
           let style = `<b style="color:red">CATEGORY</b>`;
 
           for(var i = 0; i < categories.length; i++){
-            console.log(categories[i]);
             categories[i].firstChild.innerHTML = categoryList[i];
           }
 
@@ -658,11 +681,6 @@ button:focus {
         console.log("SENT JOINQUEUE")
 
         socket.emit("joinqueue", currentcategory);
-
-        addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
-
-        state = states[1]
-        thebutton.innerText = state;
 
       }
 
