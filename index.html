@@ -21,8 +21,11 @@
 
     <tbody><tr>
       <td id="categories">
+
+        <h1 id="categoriestitle" style="font-family:tahoma; font-weight:100">CATEGORIES</h1>
+
         <div id="categoryholder">
-          <h1 id="categoriestitle" style="font-family:tahoma; font-weight:100">CATEGORIES</h1>
+
 
           <div id="categorybuttons"></div>
         </div>
@@ -268,20 +271,22 @@
     #categoriestitle{
       position: absolute;
       top:20px;
-      left:44px;
-      text-decoration: underline
+      text-decoration: underline;
+      transform: translate(-50%, 0);
+      left: 50%;
     }
 
     #categorybuttons{
       position: absolute;
-      width: 0px;
+      width: 150px;
       top: 100px;
-      left:40px;
+      left:50%;
+      transform: translate(-50%, 0);
     }
 
     .categorybutton{
       width: 150px;
-      margin: 5px;
+      margin-top: 5px;
       font-size: 18px;
     }
 
@@ -339,9 +344,12 @@
     #nextpersonbutton{
       height: 110px;
       width: max(10%, 64px);
-      font-size: 22px;
+      font-size: 15px;
+      font-family:Garamond;
 
       vertical-align: top;
+      text-align: center;
+
 
       text-overflow: hidden;
       position: relative;
@@ -784,6 +792,30 @@ button:focus {
 
 
       }
+
+    }
+
+    let categoriesobj = document.getElementById("categories");
+    let messagesobj = document.getElementById("messages");
+
+    let categorieswidth = categoriesobj.style.width;
+    let messageswidth = messagesobj.style.width;
+
+    mobilesupport();
+
+    function mobilesupport(){
+
+      let ct = categoriesobj.getBoundingClientRect();
+      let mt = messagesobj.getBoundingClientRect();
+
+      console.log(ct, mt);
+
+      if(ct.top != mt.top){
+        categoriesobj.style.width = "100vw";
+        messagesobj.style.width = "100vw";
+
+      }
+
 
     }
 
