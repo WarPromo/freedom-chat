@@ -1,38 +1,36 @@
-<html lang="en">
-  <head>
+<html lang="en"><head>
     <link rel="icon" href="https://www.pngmart.com/files/6/Bald-Eagle-PNG-Free-Download.png">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;">
     <meta name="description" content="🦅Absolutely no rules🦅, say anything you want! Debate, trolling, and general conversation is all welcome here. Get paired with strangers, and discuss whatever😁">
     <meta name="robots" content="noindex,nofollow">
     <meta content="TheFreedomChat - Absolutely no rules, text with strangers" property="og:title">
-    <meta name="keywords" content="freedomchat, strangers, chatroom, freespeech" />
+    <meta name="keywords" content="freedomchat, strangers, chatroom, freespeech">
     <meta content="🦅Absolutely no rules🦅, say anything you want! Debate, trolling, and general conversation is all welcome here. Get paired with strangers, and discuss whatever😁" property="og:description">
     <meta content="www.thefreedomchat.com" property="og:site_name">
-    <meta content='https://discord-rich-embed-test.warpromo.repl.co/freedomchaticon.png' property='og:image'>
+    <meta content="https://discord-rich-embed-test.warpromo.repl.co/freedomchaticon.png" property="og:image">
     <meta content="#1505fc" property="theme-color">
     <title>Speak freely🦅The Freedom Chat</title>
     <script src="socket.io.js"></script>
   </head>
-  <body id = "body" onunload="pageunload()">
+  <body id="body" onunload="pageunload()" style="filter: invert(0%); background-color: white;" class="vsc-initialized">
 
-  <div id = "entirechatbox">
+  <div id="entirechatbox">
 
-  <table cellspacing="5" id = "left">
+  <table id="left" cellspacing="5">
 
-    <tr>
-      <td id = "categories">
-        <div id = "categoryholder">
-          <h1 id="categoriestitle"style="font-family:tahoma; font-weight:100">CATEGORIES</h1>
+    <tbody><tr>
+      <td id="categories">
+        <div id="categoryholder">
+          <h1 id="categoriestitle" style="font-family:tahoma; font-weight:100">CATEGORIES</h1>
 
-          <div id = "categorybuttons">
-          </div>
+          <div id="categorybuttons"><button class="categorybutton"><p><b style="color:red">General</b></p></button><button class="categorybutton"><p>Debate/Politics</p></button><button class="categorybutton"><p>Storytelling</p></button></div>
         </div>
 
       </td>
     </tr>
     <tr>
-      <td id = "switchcontainer">
+      <td id="switchcontainer">
 
         <label class="switch">
           <input id="checkbox" type="checkbox">
@@ -67,16 +65,20 @@
         </script>
       </td>
     </tr>
-  </table>
+  </tbody></table>
 
-  <table cellspacing="5" id = "right">
+  <table id="right" cellspacing="5">
 
-    <tr>
+    <tbody><tr>
       <th id="messages">
 
-        <div id = "messagestext">
-          <p class="messagestexts"><br></br><b>WELCOME!</b> Absolutely no rules, say and do anything you want. Click "Start" to chat with someone</p>
-          <p id = "messageinsert" class = "messagestexts"><br></br></p>
+        <div id="messagestext">
+          <p class="messagestexts"><br><br><b>WELCOME!</b> Absolutely no rules, say and do anything you want. Click "Start" to chat with someone</p>
+          <p class="messagestexts">Searching <b style="color:red">Storytelling</b>...</p><p class="messagestexts">
+        Queue left...
+      </p><p class="messagestexts">Searching <b style="color:red">Storytelling</b>...</p><p class="messagestexts">
+        Queue left...
+      </p><p id="messageinsert" class="messagestexts"><br><br></p>
 
         </div>
 
@@ -89,31 +91,31 @@
 
       <td>
 
-        <table width = "100%" id = "inputs">
+        <table id="inputs" width="100%">
 
-          <tr>
-            <td class = "inputrow">
-              <button id = "changename" class = "regularbutton" onclick = "userinputbox()">Set Name</button>
-              <input id = "usernameinput"placeholder="Must be 1-32 characters" maxlength=32 oninput="userinputtyping()"></input>
+          <tbody><tr>
+            <td class="inputrow">
+              <button id="changename" class="regularbutton" onclick="userinputbox()">Set Name</button>
+              <input id="usernameinput" placeholder="Must be 1-32 characters" maxlength="32" oninput="userinputtyping()">
             </td>
 
           </tr>
 
           <tr>
-            <td class = "inputrow">
-              <button id = "nextpersonbutton" class = "regularbutton" onclick = "nextpersonbuttonclick()">join queue</button>
-              <input id = "messageboxinput" oninput="typing()" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength=300></input>
+            <td class="inputrow">
+              <button id="nextpersonbutton" class="regularbutton" onclick="nextpersonbuttonclick()">Start</button>
+              <input id="messageboxinput" oninput="typing()" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength="300">
             </td>
           </tr>
 
 
-        </table>
+        </tbody></table>
 
       </td>
 
     </tr>
 
-  </table>
+  </tbody></table>
 </div>
 
 <style>
@@ -134,7 +136,7 @@
 
 </style>
 
-</body>
+
 
 
   <style>
@@ -777,4 +779,5 @@ button:focus {
 
   </script>
 
-</html>
+
+</body></html>
