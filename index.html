@@ -767,7 +767,9 @@ button:focus {
     function inputbox(event) {
 
       if (event.keyCode == 13) {
-
+        
+        event.preventDefault();
+          
         let inputbox = document.getElementById("messageboxinput")
 
         let message = inputbox.value;
