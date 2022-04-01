@@ -97,7 +97,7 @@
 
           <tr>
             <td class="inputrow">
-              <button id="nextpersonbutton" class="regularbutton" onclick="nextpersonbuttonclick()">Start</button><textarea id="messageboxinput" oninput="typing()" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength="300"></textarea>
+              <button id="nextpersonbutton" class="regularbutton" onclick="nextpersonbuttonclick()"><div id ="nextpersontext">Start<div></button><textarea id="messageboxinput" oninput="typing()" onkeypress="inputbox(event)" placeholder="Enter to type..." maxlength="300"></textarea>
             </td>
           </tr>
 
@@ -198,9 +198,20 @@
 
   <style>
 
+    * {
+      touch-action: manipulation;
+    }
+
     :root{
       --chatborder: #cfcfcf;
     }
+
+
+    button{
+      color:black;
+      border: 1px solid gray;
+    }
+
 
     body{
       position: relative;
@@ -261,26 +272,25 @@
     }
 
     #categoriestitle{
-      position: absolute;
-      top:30px;
+      position: relative;
       text-decoration: underline;
-      transform: translate(-50%, 0);
-      left: 50%;
       font-size: 40px;
+      text-align: center;
     }
 
     #categorybuttons{
-      position: absolute;
+      position: relative;
       width: 150px;
-      top: 100px;
       left:50%;
       transform: translate(-50%, 0);
+
     }
 
     .categorybutton{
       width: 150px;
       margin-top: 5px;
       font-size: 18px;
+
     }
 
 
@@ -290,6 +300,7 @@
       width: max(50vw,350px);
       background-color: #dddddd;
       border: 3px solid var(--chatborder);
+      text-align: left;
     }
 
     #messagebox{
@@ -329,19 +340,22 @@
     #nextpersonbutton{
       height: 110px;
       width: 67px;
-      font-size: 25px;
-      font-family:Garamond;
-
-      vertical-align: top;
-      text-align: center;
 
 
-      text-overflow: hidden;
       position: relative;
       left: 1.4%;
       border: solid 1px var(--chatborder);
 
     }
+
+    #nextpersontext{
+
+      text-align: center;
+      font-size: 25px;
+      font-family:Garamond;
+
+    }
+
     #messageboxinput{
       width: 80%;
       height: 110px;
@@ -386,7 +400,6 @@ button:focus {
       position: absolute;
       top: 0%;
       left: 5%;
-      text-align:left;
       height: 100%;
       width: 95%;
       overflow-y: scroll;
@@ -491,7 +504,7 @@ button:focus {
     const socket = io('https://api.thefreedomchat.com:6969');
 
 
-    let states = ["Start!", "Stop", "Leave Room!"];
+    let states = ["Start", "Stop", "Exit"];
     let state = states[0];
 
     let quack = new Audio("Quack Sound Effect (128 kbps).mp3");
@@ -525,7 +538,7 @@ button:focus {
         ${user}</b>!
       `);
 
-      let thebutton = document.getElementById("nextpersonbutton");
+      let thebutton = document.getElementById("nextpersontext");
       state = states[2];
       thebutton.innerText = state;
       quack.play();
@@ -539,7 +552,7 @@ button:focus {
         ${user}</b> has left...
       `);
 
-      let thebutton = document.getElementById("nextpersonbutton");
+      let thebutton = document.getElementById("nextpersontext");
       state = states[0];
       thebutton.innerText = state;
 
@@ -553,7 +566,7 @@ button:focus {
         Queue left...
       `);
 
-      let thebutton = document.getElementById("nextpersonbutton");
+      let thebutton = document.getElementById("nextpersontext");
       state = states[0];
       thebutton.innerText = state;
 
@@ -563,7 +576,7 @@ button:focus {
 
       addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
 
-      let thebutton = document.getElementById("nextpersonbutton");
+      let thebutton = document.getElementById("nextpersontext");
       state = states[1]
       thebutton.innerText = state;
 
@@ -601,6 +614,7 @@ button:focus {
 
     socket.on("categories", categoryList => {
 
+      let thestyle = `<div style="color:red; text-align:center">CATEGORY</div>`;
 
       console.log("RECIEVED: " + categoryList);
 
@@ -619,7 +633,7 @@ button:focus {
 
         if(a == 0){
 
-          text.innerHTML = `<b style="color:red">` + text.innerHTML + "</b>";
+          text.innerHTML = thestyle.replace("CATEGORY", text.innerHTML);
           currentcategory = categoryList[a];
 
         }
@@ -628,15 +642,13 @@ button:focus {
 
         newbutton.onclick = function(){
 
-          let style = `<b style="color:red">CATEGORY</b>`;
-
           for(var i = 0; i < categories.length; i++){
             categories[i].firstChild.innerHTML = categoryList[i];
           }
 
 
           currentcategory = newbutton.firstChild.innerHTML;
-          newbutton.firstChild.innerHTML = style.replace("CATEGORY", newbutton.firstChild.innerHTML);
+          newbutton.firstChild.innerHTML = thestyle.replace("CATEGORY", newbutton.firstChild.innerHTML);
 
 
 
@@ -658,30 +670,12 @@ button:focus {
 
     })
 
-    document.getElementById("nextpersonbutton").innerText = state;
-
-    window.addEventListener('beforeunload', function (e) {
-      /*
-      if(states.indexOf(state) > 0){
-        e.preventDefault();
-      }
-      */
-
-      for(var a = 0; a < 1000; a++){
-        if(a == 0){
-          if(states.indexOf(state) > 0){
-            nextpersonbuttonclick();
-          }
-        }
-        console.log("UNLOAD SEQUENCE");
-      }
-
-    });
+    document.getElementById("nextpersontext").innerText = state;
 
     function nextpersonbuttonclick(){
 
 
-      let thebutton = document.getElementById("nextpersonbutton");
+      let thebutton = document.getElementById("nextpersontext");
 
 
       console.log(thebutton);
@@ -711,20 +705,6 @@ button:focus {
       }
 
     }
-
-
-    function leaveroom(){
-
-    }
-
-    function leavequeue(){
-
-    }
-
-    function joinqueue(){
-
-    }
-
 
     let stoptyping;
     let istyping = false
@@ -797,9 +777,12 @@ button:focus {
 
       console.log(ct, mt);
 
+
+
       if(ct.top != mt.top){
         categoriesobj.style.width = "100vw";
         messagesobj.style.width = "100vw";
+        document.getElementById("entirechatbox").style.transform = "translate(-50%)"
 
       }
 
