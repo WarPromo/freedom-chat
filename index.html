@@ -55,6 +55,8 @@
 
           theswitch.onclick = changestate
 
+
+
           function changestate(){
             if(theswitch.checked){
               document.getElementById("body").style.filter = "invert(100%)";
@@ -446,7 +448,7 @@ button:focus {
       newmessage.classList.add("messagestexts");
 
 
-      let scroll = messagebox.scrollTop == messagebox.scrollHeight - messagebox.clientHeight;
+      let scroll = 55 > Math.abs(messagebox.scrollTop - (messagebox.scrollHeight - messagebox.clientHeight));
 
       messagebox.insertBefore(newmessage, document.getElementById("messageinsert"));
 
