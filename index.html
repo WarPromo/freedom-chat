@@ -299,6 +299,10 @@
 
     }
 
+    #selectedcategory{
+      box-shadow: 0px 0px 7px #6a6a6a;
+    }
+
     .categorybutton{
       width: 150px;
       margin-top: 5px;
@@ -627,7 +631,7 @@ button:focus {
 
     socket.on("categories", categoryList => {
 
-      let thestyle = `<div style="color:red; text-align:center">CATEGORY</div>`;
+      let thestyle = `<div style="color:red; text-align:center; ">CATEGORY</div>`;
 
       console.log("RECIEVED: " + categoryList);
 
@@ -644,12 +648,16 @@ button:focus {
 
         text.innerHTML = categoryList[a];
 
+        newbutton.id = "notselectedcategory";
+
         if(a == 0){
 
           text.innerHTML = thestyle.replace("CATEGORY", text.innerHTML);
           currentcategory = categoryList[a];
+          newbutton.id = "selectedcategory";
 
         }
+
 
         newbutton.append(text);
 
@@ -657,10 +665,13 @@ button:focus {
 
           for(var i = 0; i < categories.length; i++){
             categories[i].firstChild.innerHTML = categoryList[i];
+            categories[i].id = "notselectedcategory";
+
           }
 
 
           currentcategory = newbutton.firstChild.innerHTML;
+          newbutton.id = "selectedcategory";
           newbutton.firstChild.innerHTML = thestyle.replace("CATEGORY", newbutton.firstChild.innerHTML);
 
 
