@@ -458,6 +458,8 @@ button:focus {
 
       if(scroll) messagebox.scrollTop = messagebox.scrollHeight - messagebox.clientHeight
 
+      return newmessage;
+
     }
 
     let currentname = "bobby";
@@ -539,9 +541,14 @@ button:focus {
 
     })
 
-    socket.on("chatmessage", (user, message) =>{
+    socket.on("chatmessage", (user, message, me) =>{
+
+      let namecolor = "red";
+
+      if(me) namecolor = "blue";
+
       addmessage(`
-        <b style="color:red">
+        <b style="color:${namecolor}">
         ${user}</b>:
         ${message}
       `);
@@ -558,6 +565,9 @@ button:focus {
       let thebutton = document.getElementById("nextpersontext");
       state = states[2];
       thebutton.innerText = state;
+
+      dotloadingmessage = null;
+
       quack.play();
 
     });
@@ -573,6 +583,11 @@ button:focus {
       state = states[0];
       thebutton.innerText = state;
 
+      let messageinsert = document.getElementById("messageinsert");
+      messageinsert.innerHTML = `<br><br>`;
+
+      document.getElementById("categorybuttons").style.opacity = 1;
+
       click.play();
 
     })
@@ -580,22 +595,28 @@ button:focus {
     socket.on("queueleft", (user) => {
 
       addmessage(`
-        Queue left...
+        Queue left
       `);
 
       let thebutton = document.getElementById("nextpersontext");
       state = states[0];
       thebutton.innerText = state;
 
+      document.getElementById("categorybuttons").style.opacity = 1;
+      dotloadingmessage = null;
+
     })
 
     socket.on("queuejoined", (user) => {
 
-      addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
+      dotloadingmessage = addmessage(`Searching <b style="color:red">${currentcategory}</b>...`)
+      dotloadingstring = `Searching <b style="color:red">${currentcategory}</b>`;
 
       let thebutton = document.getElementById("nextpersontext");
       state = states[1]
       thebutton.innerText = state;
+
+      document.getElementById("categorybuttons").style.opacity = 0.37;
 
     })
 
@@ -610,7 +631,7 @@ button:focus {
       addmessage(`
         name changed to
         <b style="color:blue">
-        ${username}</b>...
+        ${username}</b>
       `);
 
     })
@@ -810,6 +831,28 @@ button:focus {
 
       }
 
+
+    }
+
+
+    let dotloadingmessage;
+    let dotloadingstring;
+
+    let dotloadingstates = [".", "..", "..."];
+    let dotloadingspeed = 600;
+    let dotloadingspot = 1;
+
+    dotloading();
+
+    function dotloading(){
+
+      if(dotloadingmessage != null){
+
+        dotloadingmessage.innerHTML = dotloadingstring + dotloadingstates[dotloadingspot % (dotloadingstates.length)];
+        dotloadingspot++;
+
+      }
+      setTimeout(dotloading, dotloadingspeed)
 
     }
 
